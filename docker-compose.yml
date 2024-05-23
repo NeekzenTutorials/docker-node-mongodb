@@ -4,7 +4,7 @@ services:
   node-app:
     build: ./node-app
     ports:
-      - "8090:8090"
+      - "${PORT}:${PORT}"
     volumes:
       - ./node-app:/usr/src/app
       - /usr/src/app/node_modules
@@ -12,6 +12,7 @@ services:
       - mongo
     environment:
       - MONGO_URI=${MONGO_URI}
+      - NODE_ENV=development
     command: npm start
 
   mongo:
