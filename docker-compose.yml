@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  node-app:
+    build: ./node-app
+    ports:
+      - "8090:8090"
+    volumes:
+      - ./node-app:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=${MONGO_URI}
+    command: npm start
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - ./mongo-data:/data/db
+    ports:
+      - "27017:27017"
