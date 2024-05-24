@@ -4,15 +4,17 @@
     "description": "Node.js app with MongoDB",
     "main": "server.js",
     "scripts": {
-      "start": "nodemon server.js"
+      "start": "pm2-runtime start server.js --name myapp --watch",
+      "reload": "pm2 reload myapp",
+      "watch": "chokidar '**/*.js' -c 'npm run reload' --use-polling"
     },
     "dependencies": {
-      "express": "^4.17.1",
-      "dotenv": "^8.2.0",
-      "mongoose": "^5.10.9"
+        "dotenv": "^8.2.0",
+        "express": "^4.17.1",
+        "mongoose": "^5.10.9",
+        "pm2": "^5.3.1"
     },
     "devDependencies": {
-      "nodemon": "^2.0.7"
+        "chokidar-cli": "^3.0.0"
     }
-  }
-  
+}

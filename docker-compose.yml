@@ -12,8 +12,7 @@ services:
       - mongo
     environment:
       - MONGO_URI=${MONGO_URI}
-      - NODE_ENV=development
-    command: npm start
+    command: ["sh", "-c", "pm2 start server.js --name myapp && npm install && node watch.js"]
 
   mongo:
     image: mongo:latest

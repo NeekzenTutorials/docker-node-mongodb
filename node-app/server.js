@@ -35,16 +35,27 @@ app.get('/test', (req, res) => {
   }
 });
 
-//app.get('/trois', (req, res) => {
-//  try {
-//    res.sendFile(path.join(__dirname, 'views', 'third.html'));
-//  } catch (error) {
-//    console.log("Error:", error);
-//    res.status(500).send({
-//      message: "An error occurred while retrieving data."
-//    });
-//  }
-//});
+app.get('/trois', (req, res) => {
+  try {
+    res.sendFile(path.join(__dirname, 'views', 'third.html'));
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send({
+      message: "An error occurred while retrieving data."
+    });
+  }
+});
+
+app.get('/a', (req, res) => {
+  try {
+    res.sendFile(path.join(__dirname, 'views', 'aaa.html'));
+  } catch (error) {
+    console.log("Error:", error);
+    res.status(500).send({
+      message: "An error occurred while retrieving data."
+    });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
