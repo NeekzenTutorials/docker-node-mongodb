@@ -1,41 +1,36 @@
 const mongoose = require('mongoose');
+const Example = require('../models/example.model.js');
 require('dotenv').config();
 
-const mongoUri = process.env.MONGO_URL;
-const maxRetries = 10;
-let retries = 0;
-
+// Connect to MongoDB with retry
 const connectWithRetry = () => {
   console.log('MongoDB connection with retry');
-  mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => {
+  return mongoose.connect(process.env.MONGO_URL, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+    if (err) {
+      console.log('MongoDB connection unsuccessful, retry after 5 seconds. ', err);
+      setTimeout(connectWithRetry, 5000);
+    } else {
       console.log('MongoDB is connected');
-    })
-    .catch((err) => {
-      retries += 1;
-      console.log(`MongoDB connection unsuccessful (attempt ${retries}), retrying after 5 seconds...`, err);
-      if (retries >= maxRetries) {
-        console.error('Maximum retry attempts reached. Exiting...');
-        process.exit(1); // Arrêter l'application après avoir atteint le nombre maximum de tentatives
-      } else {
-        setTimeout(connectWithRetry, 5000);
-      }
-    });
+      insertInitialData();
+    }
+  });
 };
 
-mongoose.connection.on('connected', () => {
-  console.log('Mongoose connected to MongoDB');
-});
 
-mongoose.connection.on('error', (err) => {
-  console.log('Mongoose connection error:', err);
-});
-
-mongoose.connection.on('disconnected', () => {
-  console.log('Mongoose disconnected. Retrying connection...');
-  if (retries < maxRetries) {
-    setTimeout(connectWithRetry, 5000);
+// Insert test data
+const insertInitialData = async () => {
+  const existingData = await Example.find();
+  if (existingData.length === 0) {
+    const initialData = [
+      { name: "John Doe", age: 30, email: "john.doe@example.com" },
+      { name: "Jane Doe", age: 25, email: "jane.doe@example.com" }
+    ];
+    Example.insertMany(initialData)
+      .then(() => console.log('Initial data inserted'))
+      .catch(err => console.log('Error inserting initial data: ', err));
+  } else {
+    console.log('Initial data already exists, skipping insertion');
   }
-});
+};
 
 connectWithRetry();

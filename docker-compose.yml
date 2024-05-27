@@ -12,7 +12,7 @@ services:
       - mongo
     env_file:
       - .env
-    command: ["./wait-for-it.sh", "mongo", "npm install && pm2-runtime start server.js --name myapp && node watch.js"]
+    command: ["./wait-for-it.sh", "mongo", "npm install && pm2-runtime start server.js --name myapp"]
 
   mongo:
     image: mongo:latest

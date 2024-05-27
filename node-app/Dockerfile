@@ -12,4 +12,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "npm install && pm2-runtime start server.js --name myapp && node watch.js"]
+CMD ["sh", "-c", "npm install && pm2-runtime start server.js --name myapp"]
