@@ -16,7 +16,7 @@ services:
     networks:
         - lan
         - web
-    command: ["./wait-for-it.sh", "mongo:27017", "--", "npm", "install", "&&", "pm2 start server.js --name myapp && node watch.js"]
+    command: ["./wait-for-it.sh", "mongo", "npm install && pm2 start server.js --name myapp && node watch.js"]
     labels:
       - traefik.enable=true
       - traefik.http.routers.${NAME}.entrypoints=websecure
@@ -26,7 +26,7 @@ services:
 
   mongo:
     image: mongo:latest
-    container-name: ${NAME}-mongo
+    containername: ${NAME}-mongo
     restart: unless-stopped
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
