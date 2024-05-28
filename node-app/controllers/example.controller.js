@@ -1,8 +1,8 @@
 const Example = require('../models/example.model.js');
 
-// Ajouter une donnée
+// Add new example
 exports.create = (req, res) => {
-    console.log("Received data:", req.body); // Log pour vérifier les données reçues
+    console.log("Received data:", req.body);
     const example = new Example({
         name: req.body.name,
         age: req.body.age,
@@ -11,18 +11,18 @@ exports.create = (req, res) => {
 
     example.save()
         .then(data => {
-            console.log("Data saved:", data); // Log pour vérifier les données insérées
+            console.log("Data saved:", data);
             res.send(data);
         })
         .catch(err => {
-            console.log("Error saving data:", err); // Log en cas d'erreur
+            console.log("Error saving data:", err);
             res.status(500).send({
                 message: err.message || "Une erreur s'est produite lors de la création de l'exemple."
             });
         });
 };
 
-// Récupérer toutes les données
+// Get all examples
 exports.findAll = (req, res) => {
     Example.find()
         .then(examples => {
@@ -35,7 +35,7 @@ exports.findAll = (req, res) => {
         });
 };
 
-// Récupérer une seule donnée par ID
+// Get example by id
 exports.findOne = (req, res) => {
     Example.findById(req.params.id)
         .then(example => {
@@ -58,7 +58,7 @@ exports.findOne = (req, res) => {
         });
 };
 
-// Supprimer une donnée
+// Delete example
 exports.delete = (req, res) => {
     Example.findByIdAndRemove(req.params.id)
         .then(example => {
@@ -80,7 +80,7 @@ exports.delete = (req, res) => {
         });
 };
 
-// Modifier une donnée
+// Update example
 exports.update = (req, res) => {
     Example.findByIdAndUpdate(req.params.id, {
         name: req.body.name,
