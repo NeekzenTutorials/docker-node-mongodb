@@ -8,11 +8,12 @@ services:
     volumes:
       - ./node-app:/usr/src/app
       - /usr/src/app/node_modules
+      - ./.env:/usr/src/app/.env
     depends_on:
       - mongo
     env_file:
       - .env
-    command: ["./wait-for-it.sh", "mongo", "npm install && pm2-runtime start server.js --name myapp"]
+    command: ["./wait-for-it.sh", "mongo", "npm install && pm2 start server.js --name myapp && node watch.js"]
 
   mongo:
     image: mongo:latest

@@ -1,18 +1,17 @@
 const chokidar = require('chokidar');
 const { exec } = require('child_process');
 
-// Chemin à surveiller
 const pathToWatch = '/usr/src/app';
 
-// Options de Chokidar
+// Chokidar options
 const watcher = chokidar.watch(pathToWatch, {
-  ignored: /node_modules|\.git/,
+  ignored: /node_modules|\.git/, // Add here file to ignore on the watcher
   persistent: true,
   usePolling: true,
   interval: 1000
 });
 
-// Action à effectuer sur modification de fichier
+// actions called when a file is added, changed or deleted
 watcher.on('all', (event, path) => {
   console.log(event, path);
   exec('pm2 reload myapp', (err, stdout, stderr) => {
