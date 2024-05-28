@@ -14,6 +14,8 @@ MONGO_NAME=name
 PORT=3000
 
 MONGO_URI="mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_HOST}:${MONGO_PORT}/${MONGO_NAME}?authSource=admin"
+
+NAME=node-app
 ```
 
 * build and start the docker engine
