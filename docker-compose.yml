@@ -3,8 +3,8 @@ version: '3.8'
 services:
   node-app:
     build: ./node-app
-    ports:
-      - "${PORT}:${PORT}"
+    container_name: ${NAME}
+    restart: unless-stopped
     volumes:
       - ./node-app:/usr/src/app
       - /usr/src/app/node_modules
@@ -13,15 +13,33 @@ services:
       - mongo
     env_file:
       - .env
-    command: ["./wait-for-it.sh", "mongo", "npm install && pm2 start server.js --name myapp && node watch.js"]
+    networks:
+        - lan
+        - web
+    command: ["./wait-for-it.sh", "mongo:27017", "--", "npm", "install", "&&", "pm2 start server.js --name myapp && node watch.js"]
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.${NAME}.entrypoints=websecure
+      - traefik.http.routers.${NAME}.rule=Host(`${NAME}.jrcan.dev`)
+      - traefik.http.routers.${NAME}.tls=true
+      - traefik.http.routers.${NAME}.tls.certresolver=myresolver
 
   mongo:
     image: mongo:latest
+    container-name: ${NAME}-mongo
+    restart: unless-stopped
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
     volumes:
       - ./mongo-data:/data/db
-    ports:
-      - "27017:27017"
+    networks:
+        - lan
     command: ["mongod"]
+
+networks:
+  web:
+    external: true
+  lan:
+    external: false
+    name: lan_${NAME}   
