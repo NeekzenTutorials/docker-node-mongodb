@@ -1,21 +1,42 @@
 {
-    "name": "node-app",
-    "version": "1.0.0",
-    "description": "Node.js app with MongoDB",
-    "main": "server.js",
-    "scripts": {
-      "start": "pm2-runtime start server.js --name myapp --watch",
-      "reload": "pm2 reload myapp",
-      "watch": "chokidar '**/*.js' -c 'npm run reload' --use-polling"
-    },
-    "dependencies": {
-        "dotenv": "^8.2.0",
-        "express": "^4.17.1",
-        "mongoose": "^5.10.9",
-        "pm2": "^5.3.1",
-        "ejs": "^3.1.5"
-    },
-    "devDependencies": {
-        "chokidar-cli": "^3.0.0"
-    }
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "start": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "pnpm lint:eslint",
+    "lint:eslint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "devDependencies": {
+    "@nuxt/devtools": "latest",
+    "@nuxt/eslint": "^0.3.13",
+    "@nuxtjs/color-mode": "^3.4.1",
+    "@nuxtjs/google-fonts": "^3.2.0",
+    "@nuxtjs/tailwindcss": "^6.8.0",
+    "@sidebase/nuxt-auth": "^0.7.2",
+    "@types/bcrypt": "^5.0.2",
+    "nuxt": "^3.7.4",
+    "nuxt-headlessui": "^1.2.0",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.5",
+    "chokidar-cli": "^3.0.0"
+  },
+  "dependencies": {
+    "@pinia/nuxt": "^0.5.1",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.3.4",
+    "next-auth": "4.21.1",
+    "nuxt-icon": "^0.6.10",
+    "nuxt-server-utils": "^0.0.7",
+    "pinia": "^2.1.7",
+    "pm2": "^5.3.1",
+    "dotenv": "^8.2.0"
+  }
 }

@@ -1,5 +1,5 @@
-const chokidar = require('chokidar');
-const { exec } = require('child_process');
+import chokidar from 'chokidar';
+import { exec } from 'child_process';
 
 const pathToWatch = '/usr/src/app';
 
