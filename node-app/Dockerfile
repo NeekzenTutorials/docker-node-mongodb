@@ -10,6 +10,6 @@ RUN apt-get update && apt-get install -y netcat-openbsd
 
 COPY . .
 
-RUN chmod +x wait-for-it.sh
+RUN chmod 777 wait-for-it.sh
 
 EXPOSE 8086
